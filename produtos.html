@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lista de Produtos</title>
+  <link rel="stylesheet" href="produtos.css" />
+</head>
+<body>
+  <h1>Produtos Cadastrados</h1>
+
+  <div style="text-align: center; margin-bottom: 20px;">
+    <button onclick="carregarProdutos()" id="btn-reload">🔄 Recarregar Lista</button>
+  </div>
+
+  <div id="produtos-container"></div>
+
+  <script>
+    const container = document.getElementById('produtos-container');
+
+    function carregarProdutos() {
+      fetch('https://naufragio-sistema.onrender.com/produtos/buscar')
+        .then(res => res.json())
+        .then(produtos => {
+          container.innerHTML = '';
+          produtos.reverse().forEach(produto => {
+            const div = document.createElement('div');
+            div.classList.add('produto');
+
+            div.innerHTML = `
+              <strong>${produto.nomeProduto}</strong><br>
+              Preço: R$ ${produto.preco}<br>
+              Cores: ${produto.cores}<br>
+              Marca: ${produto.marca}<br>
+              Estilo: ${produto.estilo}<br>
+              Tamanho: ${produto.tamanho}<br>
+              Categoria: ${produto.categoria}<br>
+              Disponível: ${produto.disponivel ? 'Sim' : 'Não'}<br>
+              Data de Cadastro: ${produto.dataCadastro}<br>
+              <button onclick="deletarProduto('${produto._id}')">🗑️ Apagar</button>
+            `;
+
+            container.appendChild(div);
+          });
+        })
+        .catch(err => {
+          container.innerHTML = 'Erro ao carregar os produtos.';
+          console.error(err);
+        });
+    }
+
+    function deletarProduto(id) {
+      fetch(`https://naufragio-sistema.onrender.com/produtos/deletar/${id}`, {
+        method: 'DELETE'
+      })
+      .then(res => {
+        if (res.ok) {
+          carregarProdutos();
+        } else {
+          alert('Erro ao deletar produto.');
+        }
+      })
+      .catch(err => {
+        alert('Erro ao deletar produto.');
+        console.error(err);
+      });
+    }
+
+    // Carrega os produtos na primeira vez
+    carregarProdutos();
+  </script>
+</body>
+</html>

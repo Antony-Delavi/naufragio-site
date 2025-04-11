@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f9f9f9;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  #produtos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .produto {
+    background: white;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    position: relative;
+  }
+  
+  .produto button {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .produto button:hover {
+    background: #c0392b;
+  }
+
+  #btn-reload {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  #btn-reload:hover {
+    background: #2980b9;
+  }
