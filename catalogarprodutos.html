@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catalogar Produto</title>
+  <link rel="stylesheet" href="catalogarprodutos.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Catalogar Novo Produto</h1>
+    <form id="form-produto">
+      <input type="text" name="nomeProduto" placeholder="Nome do Produto" required>
+      <input type="number" name="preco" placeholder="Preço" step="0.01" required>
+      <input type="text" name="cores" placeholder="Cores (ex: Vermelho, Azul)" required>
+      <input type="text" name="marca" placeholder="Marca" required>
+      <input type="text" name="estilo" placeholder="Estilo" required>
+      <input type="text" name="tamanho" placeholder="Tamanho (ex: M, G, 42)" required>
+      <input type="text" name="categoria" placeholder="Categoria (ex: Camisa)" required>
+      <button type="submit">Cadastrar Produto</button>
+    </form>
+    <p id="mensagem"></p>
+  </div>
+
+  <script>
+    document.getElementById("form-produto").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const dados = Object.fromEntries(new FormData(e.target));
+      
+      try {
+        const resposta = await fetch('https://naufragio-sistema.onrender.com/produtos/criar', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(dados)
+        });
+
+        const msg = document.getElementById("mensagem");
+        if (resposta.ok) {
+          msg.textContent = "Produto cadastrado com sucesso!";
+          msg.style.color = "green";
+          e.target.reset();
+        } else {
+          msg.textContent = "Erro ao cadastrar produto.";
+          msg.style.color = "red";
+        }
+      } catch (err) {
+        console.error("Erro ao enviar:", err);
+        document.getElementById("mensagem").textContent = "Erro ao conectar com o servidor.";
+      }
+    });
+  </script>
+</body>
+</html>
