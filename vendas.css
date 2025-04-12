@@ -1,0 +1,15 @@
+.venda-card {
+    font-size: 0.9rem;
+    border-radius: 0.5rem;
+    transition: transform 0.2s ease;
+  }
+  
+  .venda-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .venda-card .card-body {
+    padding: 0.8rem;
+  }
+  
