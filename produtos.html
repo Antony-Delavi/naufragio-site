@@ -2,71 +2,29 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Lista de Produtos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Produtos Cadastrados</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="produtos.css" />
 </head>
-<body>
-  <h1>Produtos Cadastrados</h1>
+<body class="bg-light">
 
-  <div style="text-align: center; margin-bottom: 20px;">
-    <button onclick="carregarProdutos()" id="btn-reload">🔄 Recarregar Lista</button>
+  <div class="container py-4">
+    <h1 class="text-center mb-4 text-primary fs-3">Produtos</h1>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="produtos.html" id="btn-reload" class="btn btn-primary btn-sm">🔄 Recarregar</a>
+      <a href="catalogarprodutos.html" class="btn btn-success btn-sm">➕ Novo Produto</a>
+    </div>
+
+    <h5 class="text-success mt-3 mb-2">Disponíveis</h5>
+    <div id="produtos-disponiveis" class="row row-cols-2 g-2"></div>
+
+    <h5 class="text-danger mt-4 mb-2">Indisponíveis</h5>
+    <div id="produtos-indisponiveis" class="row row-cols-2 g-2"></div>
   </div>
 
-  <div id="produtos-container"></div>
-
-  <script>
-    const container = document.getElementById('produtos-container');
-
-    function carregarProdutos() {
-      fetch('https://naufragio-sistema.onrender.com/produtos/buscar')
-        .then(res => res.json())
-        .then(produtos => {
-          container.innerHTML = '';
-          produtos.reverse().forEach(produto => {
-            const div = document.createElement('div');
-            div.classList.add('produto');
-
-            div.innerHTML = `
-              <strong>${produto.nomeProduto}</strong><br>
-              Preço: R$ ${produto.preco}<br>
-              Cores: ${produto.cores}<br>
-              Marca: ${produto.marca}<br>
-              Estilo: ${produto.estilo}<br>
-              Tamanho: ${produto.tamanho}<br>
-              Categoria: ${produto.categoria}<br>
-              Disponível: ${produto.disponivel ? 'Sim' : 'Não'}<br>
-              Data de Cadastro: ${produto.dataCadastro}<br>
-              <button onclick="deletarProduto('${produto._id}')">🗑️ Apagar</button>
-            `;
-
-            container.appendChild(div);
-          });
-        })
-        .catch(err => {
-          container.innerHTML = 'Erro ao carregar os produtos.';
-          console.error(err);
-        });
-    }
-
-    function deletarProduto(id) {
-      fetch(`https://naufragio-sistema.onrender.com/produtos/deletar/${id}`, {
-        method: 'DELETE'
-      })
-      .then(res => {
-        if (res.ok) {
-          carregarProdutos();
-        } else {
-          alert('Erro ao deletar produto.');
-        }
-      })
-      .catch(err => {
-        alert('Erro ao deletar produto.');
-        console.error(err);
-      });
-    }
-
-    // Carrega os produtos na primeira vez
-    carregarProdutos();
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="produtos.js"></script>
 </body>
 </html>

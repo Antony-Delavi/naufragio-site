@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vendas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans p-6">
+  <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <h1 class="text-3xl font-semibold text-center text-gray-800 mb-6">Vendas Realizadas</h1>
+
+    <div class="text-center mb-4">
+      <button onclick="carregarVendas()" class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 focus:outline-none">
+        🔄 Recarregar Lista
+      </button>
+    </div>
+
+    <div id="vendas-container" class="space-y-6">
+      <!-- As vendas serão inseridas aqui -->
+    </div>
+  </div>
+
+  <script>
+    const container = document.getElementById('vendas-container');
+
+    function carregarVendas() {
+      fetch('https://naufragio-sistema.onrender.com/vendas/buscarvendas')
+        .then(res => res.json())
+        .then(vendas => {
+          container.innerHTML = '';
+          vendas.reverse().forEach(venda => {
+            const div = document.createElement('div');
+            div.classList.add('bg-white', 'p-4', 'rounded-lg', 'shadow-md', 'border', 'border-gray-200');
+
+            div.innerHTML = `
+              <strong class="text-lg text-gray-700">${venda.nomeProduto}</strong><br>
+              <span class="text-gray-600">Valor: R$ ${venda.valorProduto}</span><br>
+              <span class="text-gray-600">Desconto: ${venda.desconto}%</span><br>
+              <span class="text-gray-600">Categoria: ${venda.categoria}</span><br>
+              <span class="text-gray-500">Data da Venda: ${venda.dataCadastro}</span>
+            `;
+
+            container.appendChild(div);
+          });
+        })
+        .catch(err => {
+          container.innerHTML = '<p class="text-red-600">Erro ao carregar as vendas.</p>';
+          console.error(err);
+        });
+    }
+
+    // Carrega as vendas na primeira vez
+    carregarVendas();
+  </script>
+</body>
+</html>
