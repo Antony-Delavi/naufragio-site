@@ -36,6 +36,7 @@ function renderizarProdutos(produtos) {
         <small>R$ ${produto.preco.toFixed(2)}</small>
         <div class="mt-auto d-flex gap-2">
           ${produto.disponivel ? `<button onclick="venderProduto('${encodeURIComponent(produto.nomeProduto)}')" class="btn btn-sm btn-outline-success">💸</button>` : ''}
+          ${!produto.disponivel ? `<button onclick="reembolsarProduto('${produto._id}', '${encodeURIComponent(produto.nomeProduto)}')" class="btn btn-sm btn-outline-warning">🔄</button>` : ''}
           <button onclick="apagarProduto('${produto._id}')" class="btn btn-sm btn-outline-danger">🗑️</button>
         </div>
         <div class="detalhes-produto">
@@ -88,6 +89,61 @@ function venderProduto(nomeProduto) {
       console.error('Erro ao vender:', err);
       alert('Erro ao realizar a venda.');
     });
+}
+
+function reembolsarProduto(idProduto, nomeProduto) {
+  nomeProduto = decodeURIComponent(nomeProduto);
+  const confirmReembolso = confirm(`Tem certeza que deseja reembolsar "${nomeProduto}"? Isso tornará o produto disponível novamente e removerá a venda associada.`);
+
+  if (confirmReembolso) {
+    // Buscar venda associada
+    fetch('https://naufragio-sistema.onrender.com/vendas/buscarvendas')
+      .then(res => res.json())
+      .then(vendas => {
+        const venda = vendas.find(v => v.nomeProduto === nomeProduto);
+        if (!venda) {
+          throw new Error('Nenhuma venda encontrada para este produto.');
+        }
+
+        // Deletar a venda
+        return fetch(`https://naufragio-sistema.onrender.com/vendas/deletar/${venda._id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(res => {
+            if (!res.ok) {
+              return res.json().then(err => { throw new Error(err.message || 'Erro ao deletar venda'); });
+            }
+            return res.json();
+          })
+          .then(() => {
+            // Tornar produto disponível
+            return fetch(`https://naufragio-sistema.onrender.com/produtos/atualizar/${idProduto}`, {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ disponivel: true })
+            });
+          });
+      })
+      .then(res => {
+        if (!res.ok) {
+          return res.json().then(err => { throw new Error(err.message || 'Erro ao atualizar produto'); });
+        }
+        return res.json();
+      })
+      .then(response => {
+        alert(response.message || 'Produto reembolsado com sucesso! Disponível novamente.');
+        carregarProdutos();
+      })
+      .catch(err => {
+        console.error('Erro ao reembolsar:', err);
+        alert(`Erro ao reembolsar: ${err.message}`);
+      });
+  }
 }
 
 function apagarProduto(id) {
