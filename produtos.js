@@ -35,8 +35,8 @@ function renderizarProdutos(produtos) {
         <span class="badge ${badgeClass} mb-2">${badgeText}</span><br>
         <small>R$ ${produto.preco.toFixed(2)}</small>
         <div class="mt-auto d-flex gap-2">
-          ${produto.disponivel ? `<button onclick="venderProduto('${produto.nomeProduto}')" class="btn btn-sm btn-outline-success">💸</button>` : ''}
-          <button onclick="apagarProduto('${produto.nomeProduto}')" class="btn btn-sm btn-outline-danger">🗑️</button>
+          ${produto.disponivel ? `<button onclick="venderProduto('${encodeURIComponent(produto.nomeProduto)}')" class="btn btn-sm btn-outline-success">💸</button>` : ''}
+          <button onclick="apagarProduto('${produto._id}')" class="btn btn-sm btn-outline-danger">🗑️</button>
         </div>
         <div class="detalhes-produto">
           <p><strong>Descrição:</strong> ${produto.descricao || 'Sem descrição'}</p>
@@ -53,7 +53,7 @@ function renderizarProdutos(produtos) {
     }
 
     card.addEventListener('click', (e) => {
-      if (e.target.closest('button')) return; // Evita expandir ao clicar nos botões
+      if (e.target.closest('button')) return;
       const detalhes = card.querySelector('.detalhes-produto');
       const isExpanded = detalhes.style.display === 'block';
       detalhes.style.display = isExpanded ? 'none' : 'block';
@@ -62,6 +62,7 @@ function renderizarProdutos(produtos) {
 }
 
 function venderProduto(nomeProduto) {
+  nomeProduto = decodeURIComponent(nomeProduto);
   const desconto = prompt("Informe o desconto em reais (caso não haja, digite 0):");
 
   if (desconto === null || desconto === '') return;
@@ -88,21 +89,31 @@ function venderProduto(nomeProduto) {
     });
 }
 
-function apagarProduto(nomeProduto) {
-  const confirmDelete = confirm("Tem certeza que deseja apagar este produto?");
+function apagarProduto(id) {
+  const produto = produtos.find(p => p._id === id);
+  const nomeProduto = produto ? produto.nomeProduto : 'Produto';
+  const confirmDelete = confirm(`Tem certeza que deseja apagar o produto "${nomeProduto}"?`);
   
   if (confirmDelete) {
-    fetch(`https://naufragio-sistema.onrender.com/produtos/deletar/${nomeProduto}`, {
-      method: 'DELETE'
+    fetch(`https://naufragio-sistema.onrender.com/produtos/deletar/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) {
+        return res.json().then(err => { throw new Error(err.message || 'Erro desconhecido'); });
+      }
+      return res.json();
+    })
     .then(response => {
-      alert('Produto apagado com sucesso!');
+      alert(response.message || 'Produto apagado com sucesso!');
       carregarProdutos();
     })
     .catch(err => {
       console.error('Erro ao apagar produto:', err);
-      alert('Erro ao apagar o produto.');
+      alert(`Erro ao apagar o produto: ${err.message}`);
     });
   }
 }
