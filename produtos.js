@@ -30,6 +30,7 @@ function renderizarProdutos(produtos) {
 
     card.innerHTML = `
       <div class="card-body">
+        ${produto.imagem ? `<img src="${produto.imagem}" class="card-image" alt="${produto.nomeProduto}" />` : ''}
         <h6 class="card-title">${produto.nomeProduto}</h6>
         <p class="mb-1">${produto.categoria}</p>
         <span class="badge ${badgeClass} mb-2">${badgeText}</span><br>

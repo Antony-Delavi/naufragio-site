@@ -21,42 +21,12 @@
       <input type="text" name="estilo" placeholder="Estilo" required />
       <input type="text" name="tamanho" placeholder="Tamanho (ex: M, G, 42)" required />
       <input type="text" name="categoria" placeholder="Categoria (ex: Camisa)" required />
+      <input type="file" name="imagem" accept="image/*" capture="environment" />
       <button type="submit">✅ Cadastrar Produto</button>
     </form>
     <p id="mensagem"></p>
   </div>
 
-  <script>
-    document.getElementById("form-produto").addEventListener("submit", async function(e) {
-      e.preventDefault();
-
-      const dados = Object.fromEntries(new FormData(e.target));
-      
-      try {
-        const resposta = await fetch('https://naufragio-sistema.onrender.com/produtos/criar', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(dados)
-        });
-
-        const msg = document.getElementById("mensagem");
-        if (resposta.ok) {
-          msg.textContent = "✅ Produto cadastrado com sucesso!";
-          msg.className = "success";
-          e.target.reset();
-        } else {
-          msg.textContent = "❌ Erro ao cadastrar produto.";
-          msg.className = "error";
-        }
-      } catch (err) {
-        console.error("Erro ao enviar:", err);
-        const msg = document.getElementById("mensagem");
-        msg.textContent = "⚠️ Erro ao conectar com o servidor.";
-        msg.className = "error";
-      }
-    });
-  </script>
+  <script src="catalogarprodutos.js"></script>
 </body>
 </html>
