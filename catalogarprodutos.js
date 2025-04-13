@@ -48,8 +48,8 @@ document.getElementById("form-produto").addEventListener("submit", async functio
 async function comprimirImagem(file) {
   return new Promise((resolve, reject) => {
     // Validar tamanho inicial do arquivo (máximo 5MB para evitar travamentos)
-    if (file.size > 5 * 1024 * 1024) {
-      reject(new Error('A imagem é muito grande (máximo 5 MB).'));
+    if (file.size > 10 * 1024 * 1024) {
+      reject(new Error('A imagem é muito grande (máximo 10 MB).'));
       return;
     }
 
@@ -63,7 +63,7 @@ async function comprimirImagem(file) {
         // Redimensionar para largura máxima de 600px (reduz tamanho)
         let width = img.width;
         let height = img.height;
-        const maxWidth = 600;
+        const maxWidth = 400;
         if (width > maxWidth) {
           height = (maxWidth / width) * height;
           width = maxWidth;

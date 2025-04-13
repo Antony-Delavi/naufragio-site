@@ -30,7 +30,6 @@ function renderizarProdutos(produtos) {
 
     card.innerHTML = `
       <div class="card-body">
-        ${produto.imagem ? `<img src="${produto.imagem}" class="card-image" alt="${produto.nomeProduto}" />` : ''}
         <h6 class="card-title">${produto.nomeProduto}</h6>
         <p class="mb-1">${produto.categoria}</p>
         <span class="badge ${badgeClass} mb-2">${badgeText}</span><br>
@@ -40,6 +39,7 @@ function renderizarProdutos(produtos) {
           <button onclick="apagarProduto('${produto._id}')" class="btn btn-sm btn-outline-danger">🗑️</button>
         </div>
         <div class="detalhes-produto">
+          ${produto.imagem ? `<img src="${produto.imagem}" alt="${produto.nomeProduto}" />` : '<p>Sem imagem</p>'}
           <p><strong>Descrição:</strong> ${produto.descricao || 'Sem descrição'}</p>
           <p><strong>Marca:</strong> ${produto.marca}</p>
           <p><strong>Valor Original:</strong> R$ ${produto.precoOriginal ? produto.precoOriginal.toFixed(2) : produto.preco.toFixed(2)}</p>
