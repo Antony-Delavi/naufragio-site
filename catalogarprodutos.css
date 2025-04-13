@@ -1,22 +1,24 @@
+/* Reset e base */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-  background: linear-gradient(135deg, #e3f2fd, #ffffff);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 30px;
+  background-color: #121212;
+  min-height: 100vh;
+  padding: 1rem;
 }
 
 .container {
   max-width: 500px;
   margin: auto;
-  background: white;
-  padding: 30px 35px;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  background-color: #1f1f1f;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   animation: slideIn 0.6s ease forwards;
   transform: translateY(50px);
   opacity: 0;
@@ -35,9 +37,9 @@ body {
 
 h1 {
   text-align: center;
-  margin-bottom: 30px;
-  color: #1565c0;
-  font-size: 22px;
+  margin-bottom: 1.5rem;
+  color: #00d1ff;
+  font-size: 1.5rem;
   letter-spacing: 0.5px;
 }
 
@@ -47,40 +49,97 @@ form {
 }
 
 input {
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 14px;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  background-color: #212121;
+  color: #ffffff;
+  border: 1px solid #00d1ff;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
   transition: border 0.3s, box-shadow 0.3s;
 }
 
 input:focus {
-  border-color: #1976d2;
-  box-shadow: 0 0 8px rgba(25, 118, 210, 0.3);
+  border-color: #80deea;
+  box-shadow: 0 0 8px rgba(128, 222, 234, 0.5);
   outline: none;
 }
 
 button {
-  padding: 14px;
-  font-size: 16px;
+  padding: 0.75rem;
+  font-size: 1rem;
   font-weight: bold;
-  background-color: #1976d2;
-  color: white;
+  background-color: #00d1ff;
+  color: #121212;
   border: none;
-  border-radius: 10px;
+  border-radius: 0.5rem;
   cursor: pointer;
   transition: background 0.3s, transform 0.2s;
 }
 
 button:hover {
-  background-color: #1565c0;
+  background-color: #80deea;
   transform: scale(1.03);
 }
 
 #mensagem {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 1rem;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 0.9rem;
+}
+
+#mensagem.success {
+  color: #28a745;
+}
+
+#mensagem.error {
+  color: #dc3545;
+}
+
+.btn-outline-light {
+  border-color: #b0bec5;
+  color: #b0bec5;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+.btn-outline-light:hover {
+  background-color: #b0bec5;
+  color: #121212;
+}
+
+/* Ajustes para celular */
+@media (max-width: 576px) {
+  body {
+    padding: 0.5rem;
+  }
+
+  .container {
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  input {
+    font-size: 0.85rem;
+    padding: 0.6rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  #mensagem {
+    font-size: 0.85rem;
+  }
+
+  .btn-outline-light {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
 }

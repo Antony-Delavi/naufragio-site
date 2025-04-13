@@ -1,30 +1,200 @@
+body {
+  background-color: #121212;
+}
+
+.card {
+  border: none;
+  border-radius: 0.75rem;
+}
+
 .card-produto {
-  font-size: 0.85rem;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  min-height: 120px;
-  cursor: pointer;
+  background-color: #1f1f1f;
   transition: transform 0.2s ease;
+  height: 100%; /* Garante que todos os cartões tenham a mesma altura */
+  display: flex;
+  flex-direction: column;
 }
 
 .card-produto:hover {
   transform: scale(1.02);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.1);
 }
 
-.card-produto .card-body {
-  padding: 0.5rem;
+.card-body {
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  color: #ffffff; /* Texto branco para maior contraste */
 }
 
-.card-produto .info {
-  font-size: 0.8rem;
+.card-title {
+  color: #00d1ff;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
 }
 
-.card-produto .badge {
-  font-size: 0.7rem;
+.card-body p {
+  color: #b0bec5; /* Cinza claro para textos secundários */
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
 }
 
-.btn-deletar {
+.card-body small {
+  color: #b0bec5; /* Cinza claro para preços */
+  font-size: 0.85rem;
+}
+
+.detalhes-produto {
+  display: none;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #343a40;
+  background-color: #212121;
+}
+
+.detalhes-produto p {
+  margin-bottom: 0.25rem;
+  color: #b0bec5;
+}
+
+.badge {
   font-size: 0.75rem;
-  padding: 0.3rem 0.6rem;
+  padding: 0.4em 0.6em;
+}
+
+.container {
+  padding: 1rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1rem;
+}
+
+.btn {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+.filtro-container {
+  margin-bottom: 1rem;
+}
+
+.filtro-container input {
+  background-color: #1f1f1f;
+  color: white;
+  border: 1px solid #00d1ff;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.filtro-container input:focus {
+  outline: none;
+  border-color: #80deea;
+  box-shadow: 0 0 5px rgba(128, 222, 234, 0.5);
+}
+
+.btn-outline-success {
+  border-color: #28a745;
+  color: #28a745;
+}
+
+.btn-outline-success:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-outline-light {
+  border-color: #b0bec5;
+  color: #b0bec5;
+}
+
+.btn-outline-light:hover {
+  background-color: #b0bec5;
+  color: #121212;
+}
+
+/* Layout da grade: 2 colunas no celular, 3 no desktop */
+.row {
+  --bs-gutter-x: 1rem;
+}
+
+@media (min-width: 768px) {
+  #produtos-disponiveis,
+  #produtos-indisponiveis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas no desktop */
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  #produtos-disponiveis,
+  #produtos-indisponiveis {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas no celular */
+    gap: 0.75rem;
+  }
+}
+
+/* Ajustes para celular */
+@media (max-width: 576px) {
+  .container {
+    padding: 0.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  h5 {
+    font-size: 0.9rem;
+  }
+
+  .card-body {
+    padding: 0.75rem;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-body p,
+  .card-body small {
+    font-size: 0.85rem;
+  }
+
+  .detalhes-produto {
+    font-size: 0.8rem;
+  }
+
+  .badge {
+    font-size: 0.7rem;
+  }
+
+  .btn {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .filtro-container input {
+    font-size: 0.85rem;
+  }
 }
