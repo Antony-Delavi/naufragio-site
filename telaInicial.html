@@ -10,89 +10,89 @@
 <body>
   <style>
     * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-body {
-  background-color: #121212;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-}
+    body {
+      background-color: #121212;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
 
-.container {
-  width: 100%;
-  max-width: 400px;
-}
+    .container {
+      width: 100%;
+      max-width: 400px;
+    }
 
-.card {
-  background-color: #1f1f1f;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-  border: none;
-}
+    .card {
+      background-color: #1f1f1f;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      border: none;
+    }
 
-h1 {
-  font-size: 1.5rem;
-  color: #00d1ff;
-  margin-bottom: 1.5rem;
-  font-weight: 700;
-}
+    h1 {
+      font-size: 1.5rem;
+      color: #00d1ff;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
 
-.button-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
 
-.btn-custom {
-  background-color: #212121;
-  color: #b0bec5;
-  border: 1px solid #00d1ff;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: transform 0.2s, background-color 0.3s, color 0.3s;
-  width: 100%;
-  text-align: center;
-}
+    .btn-custom {
+      background-color: #212121;
+      color: #b0bec5;
+      border: 1px solid #00d1ff;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.3s, color 0.3s;
+      width: 100%;
+      text-align: center;
+    }
 
-.btn-custom:hover {
-  background-color: #00d1ff;
-  color: #121212;
-  transform: translateY(-2px);
-}
+    .btn-custom:hover {
+      background-color: #00d1ff;
+      color: #121212;
+      transform: translateY(-2px);
+    }
 
-.btn-custom i {
-  margin-right: 0.5rem;
-}
+    .btn-custom i {
+      margin-right: 0.5rem;
+    }
 
-@media (max-width: 576px) {
-  body {
-    padding: 0.5rem;
-  }
+    @media (max-width: 576px) {
+      body {
+        padding: 0.5rem;
+      }
 
-  .card {
-    padding: 1.5rem;
-  }
+      .card {
+        padding: 1.5rem;
+      }
 
-  h1 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-  }
+      h1 {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+      }
 
-  .btn-custom {
-    font-size: 0.9rem;
-    padding: 0.6rem;
-  }
-}
+      .btn-custom {
+        font-size: 0.9rem;
+        padding: 0.6rem;
+      }
+    }
   </style>
   <div class="container text-center">
     <div class="card mx-auto">
@@ -109,6 +109,9 @@ h1 {
         </button>
         <button class="btn btn-custom" onclick="location.href='./vendas/vendas.html'">
           <i class="bi bi-currency-dollar"></i> Vendas
+        </button>
+        <button class="btn btn-custom" onclick="location.href='./financas/financas.html'">
+          <i class="bi bi-wallet2"></i> Finanças
         </button>
       </div>
     </div>
