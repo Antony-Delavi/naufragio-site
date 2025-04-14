@@ -96,14 +96,24 @@ function reembolsarProduto(idProduto, nomeProduto) {
   const confirmReembolso = confirm(`Tem certeza que deseja reembolsar "${nomeProduto}"? Isso tornará o produto disponível novamente e removerá a venda associada.`);
 
   if (confirmReembolso) {
+    console.log(`Iniciando reembolso para produto ID: ${idProduto}, Nome: ${nomeProduto}`);
+    
     // Buscar venda associada
-    fetch('https://naufragio-sistema.onrender.com/vendas/buscarvendas')
-      .then(res => res.json())
+    fetch('https://naufragio-sistema.onrender.com/vendas/buscar')
+      .then(res => {
+        console.log('Resposta de /vendas/buscar:', res.status, res.statusText);
+        if (!res.ok) {
+          throw new Error(`Erro ao buscar vendas: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(vendas => {
+        console.log('Vendas recebidas:', vendas);
         const venda = vendas.find(v => v.nomeProduto === nomeProduto);
         if (!venda) {
           throw new Error('Nenhuma venda encontrada para este produto.');
         }
+        console.log('Venda encontrada:', venda);
 
         // Deletar a venda
         return fetch(`https://naufragio-sistema.onrender.com/vendas/deletar/${venda._id}`, {
@@ -113,12 +123,14 @@ function reembolsarProduto(idProduto, nomeProduto) {
           }
         })
           .then(res => {
+            console.log('Resposta de /vendas/deletar:', res.status, res.statusText);
             if (!res.ok) {
-              return res.json().then(err => { throw new Error(err.message || 'Erro ao deletar venda'); });
+              return res.text().then(text => { throw new Error(`Erro ao deletar venda: ${text}`); });
             }
             return res.json();
           })
-          .then(() => {
+          .then(response => {
+            console.log('Venda deletada:', response);
             // Tornar produto disponível
             return fetch(`https://naufragio-sistema.onrender.com/produtos/atualizar/${idProduto}`, {
               method: 'PATCH',
@@ -130,12 +142,14 @@ function reembolsarProduto(idProduto, nomeProduto) {
           });
       })
       .then(res => {
+        console.log('Resposta de /produtos/atualizar:', res.status, res.statusText);
         if (!res.ok) {
-          return res.json().then(err => { throw new Error(err.message || 'Erro ao atualizar produto'); });
+          return res.text().then(text => { throw new Error(`Erro ao atualizar produto: ${text}`); });
         }
         return res.json();
       })
       .then(response => {
+        console.log('Produto atualizado:', response);
         alert(response.message || 'Produto reembolsado com sucesso! Disponível novamente.');
         carregarProdutos();
       })
